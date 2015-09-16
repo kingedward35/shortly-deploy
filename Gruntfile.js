@@ -3,6 +3,13 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      // options: {
+      //   separator: ';',
+      // },
+      dist: {
+        src: ['public/client/*.js'],
+        dest: 'public/client/output.js',
+      },
     },
 
     mochaTest: {
@@ -21,23 +28,39 @@ module.exports = function(grunt) {
     },
 
     uglify: {
-    },
-
-    jshint: {
-      files: [
-        // Add filespec list here
-      ],
-      options: {
-        force: 'true',
-        jshintrc: '.jshintrc',
-        ignores: [
-          'public/lib/**/*.js',
-          'public/dist/**/*.js'
-        ]
+      my_target: {
+        files: {
+          'public/dist/output.min.js': ['public/client/output.js']
+        }
       }
     },
 
+    jshint: {
+      options: {
+        '-W030': true
+      },
+      all: ['app/**/*.js', 'lib/*.js', 'public/client/*.js', '/*.js']
+    },
+
     cssmin: {
+      target: {
+        files: [{
+          expand: true,
+          cwd: 'public/',
+          src: ['*.css', '!*.min.css'],
+          dest: 'public/dist/',
+          ext: '.min.css'
+        }]
+      }
+      // options: {
+      //   shorthandCompacting: false,
+      //   roundingPrecision: -1
+      // },
+      // target: {
+      //   files: {
+      //     '/public/dist/style.css': ['/public/style.css']
+      //   }
+      // }
     },
 
     watch: {
@@ -59,6 +82,7 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
+        command: 'git push heroku master'
       }
     },
   });
@@ -90,10 +114,13 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
 
   grunt.registerTask('test', [
-    'mochaTest'
+    'mochaTest',
+    'jshint'
   ]);
 
   grunt.registerTask('build', [
+    'concat',
+    'cssmin'
   ]);
 
   grunt.registerTask('upload', function(n) {
