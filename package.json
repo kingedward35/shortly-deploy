@@ -3,13 +3,12 @@
   "version": "0.0.1",
   "description": "shortly using express",
   "main": "index.js",
+  "engines": {
+    "node" "0.12.7"
+  }
   "repository": "",
   "license": "Proprietary",
   "private": true,
-  "scripts": {
-    "postinstall": "grunt build",
-    "start": "node index.js"
-  },
   "dependencies": {
     "knex": "~0.5.7",
     "bookshelf": "~0.6.4",
@@ -36,5 +35,9 @@
   },
   "devDependencies": {
     "supertest": "^0.10.0"
-  }
+  },
+  "scripts": {
+    "postinstall": "grunt build",
+    "start": "node index.js"
+  },
 }

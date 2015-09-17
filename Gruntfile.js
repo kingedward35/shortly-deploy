@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 
     nodemon: {
       dev: {
-        script: 'server.js'
+        script: 'index.js'
       }
     },
 
@@ -82,7 +82,12 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
-        command: 'git push heroku master'
+        command: 'git push heroku master',
+        options: {
+          sdtout: true,
+          stderr: true,
+          failOnError: true
+        }
       }
     },
   });
@@ -124,9 +129,13 @@ module.exports = function(grunt) {
     'uglify'
   ]);
 
+  grunt.registerTask('prod', [
+    'shell'
+  ]);
+
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
-      'shell'
+      grunt.task.run(['shell:prodServer']);
     } else {
       grunt.task.run(['build', 'server-dev']);
     }
