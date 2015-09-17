@@ -133,6 +133,8 @@ module.exports = function(grunt) {
     'shell'
   ]);
 
+  grunt.registerTask('heroku:production', ['build']);
+
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
       grunt.task.run(['shell:prodServer']);
