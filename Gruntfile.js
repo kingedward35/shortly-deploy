@@ -3,9 +3,6 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
-      // options: {
-      //   separator: ';',
-      // },
       dist: {
         src: ['public/client/*.js'],
         dest: 'public/client/output.js',
@@ -52,15 +49,6 @@ module.exports = function(grunt) {
           ext: '.min.css'
         }]
       }
-      // options: {
-      //   shorthandCompacting: false,
-      //   roundingPrecision: -1
-      // },
-      // target: {
-      //   files: {
-      //     '/public/dist/style.css': ['/public/style.css']
-      //   }
-      // }
     },
 
     watch: {
